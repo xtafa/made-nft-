@@ -1,0 +1,33 @@
+type NFT {
+  owner: PublicKey,
+  metadata: string,
+  tokenId: u64
+}
+
+function createNFT(owner: PublicKey, metadata: string, tokenId: u64): NFT {
+  return NFT {
+    owner: owner,
+    metadata: metadata,
+    tokenId: tokenId
+  };
+}
+
+function transferNFT(nft: NFT, recipient: PublicKey) {
+  assert(nft.owner != recipient, "Cannot transfer to the current owner");
+  nft.owner = recipient;
+  // Perform the transfer logic here
+  // e.g., update recipient's NFT collection
+  print("Transfer successful: NFT with tokenId ", nft.tokenId, " transferred from ", nft.owner, " to ", recipient);
+}
+
+function main() {
+  let owner: PublicKey = "0x0123456789abcdef";  // Replace with actual public key
+  let metadata: string = "NFT Metadata";
+  let tokenId: u64 = 1;
+  
+  let nft: NFT = createNFT(owner, metadata, tokenId);
+  
+  let recipient: PublicKey = "0xfedcba9876543210";  // Replace with actual public key
+  
+  transferNFT(nft, recipient);
+}
